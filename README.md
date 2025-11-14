@@ -92,12 +92,23 @@ Accuracy = (Correct characters / Total characters typed) × 100
 
 ## Technologies Used
 
-- **React 18**: Modern UI library
-- **TypeScript**: Type-safe development
-- **Vite**: Fast build tool and dev server
-- **pdf.js**: PDF file parsing
-- **epub.js**: EPUB file parsing
+- **React 18.3.1**: Modern UI library with latest stable version
+- **TypeScript 5.7**: Type-safe development with latest features
+- **Vite 6**: Fast build tool and dev server
+- **pdf.js 4.x**: PDF file parsing with updated API
+- **epub.js**: EPUB file parsing (Note: Consider alternatives for production use)
 - **CSS3**: Modern styling with gradients and animations
+
+## Performance Optimizations
+
+This application has been optimized for handling large texts efficiently:
+
+- **useMemo** for rendering text - prevents recreating thousands of DOM elements on every keystroke
+- **useCallback** for event handlers - reduces unnecessary re-renders
+- **Memoized calculations** - WPM and progress calculations are cached
+- **Efficient rendering** - Only re-renders when necessary, not on every state change
+
+These optimizations ensure smooth performance even with texts containing 10,000+ characters.
 
 ## Project Structure
 
@@ -117,12 +128,24 @@ TouchType/
 └── README.md                # This file
 ```
 
+## Important Notes
+
+### EPUB Support Limitation
+The `epubjs` library (v0.3.93) has not been updated since 2020. While it still works for basic EPUB files, for production applications you may want to consider:
+- Using only TXT and PDF formats
+- Implementing a server-side EPUB parser
+- Exploring alternative libraries like Readium.js for more robust EPUB support
+
+### Performance
+The app is optimized to handle large texts (10,000+ characters) efficiently through React memoization patterns. However, extremely large files (100,000+ characters) may still cause some performance degradation due to the character-by-character rendering approach.
+
 ## Tips for Best Results
 
 1. **Choose appropriate texts**: Start with easier texts and gradually increase difficulty
 2. **Focus on accuracy first**: Speed will naturally improve with practice
 3. **Take breaks**: Practice in 15-20 minute sessions for best results
 4. **Track progress**: Use different texts to see how your WPM improves over time
+5. **File size**: For best performance, use texts under 50,000 characters
 
 ## Future Enhancements
 

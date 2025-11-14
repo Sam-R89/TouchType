@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import './App.css';
 import { parseFile } from './utils/fileParser';
 
@@ -67,7 +67,7 @@ function App() {
     calculateStats(value);
   };
 
-  const calculateStats = (input: string) => {
+  const calculateStats = useCallback((input: string) => {
     const charactersTyped = input.length;
 
     // Calculate accuracy
@@ -95,9 +95,9 @@ function App() {
     if (input === text) {
       setIsTyping(false);
     }
-  };
+  }, [text, startTime]);
 
-  const resetTyping = () => {
+  const resetTyping = useCallback(() => {
     setUserInput('');
     setIsTyping(false);
     setStartTime(null);
@@ -107,9 +107,10 @@ function App() {
       timeElapsed: 0,
       charactersTyped: 0,
     });
-  };
+  }, []);
 
-  const renderText = () => {
+  // Memoize the rendered text to avoid recreating thousands of elements on every render
+  const renderedText = useMemo(() => {
     if (!text) return null;
 
     return text.split('').map((char, index) => {
@@ -127,7 +128,7 @@ function App() {
         </span>
       );
     });
-  };
+  }, [text, userInput]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -135,7 +136,10 @@ function App() {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const progress = text ? (userInput.length / text.length) * 100 : 0;
+  const progress = useMemo(
+    () => (text ? (userInput.length / text.length) * 100 : 0),
+    [text, userInput.length]
+  );
 
   return (
     <div className="app">
@@ -213,7 +217,7 @@ function App() {
 
           <div className="typing-area">
             <div className="text-display">
-              {renderText()}
+              {renderedText}
             </div>
             <textarea
               ref={inputRef}
