@@ -22,6 +22,49 @@
   font-size: 1.1rem;
 }
 
+.demo-section {
+  text-align: center;
+  padding: 40px;
+  margin-bottom: 30px;
+}
+
+.demo-section h2 {
+  color: #333;
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.demo-section p {
+  color: #666;
+  font-size: 1.1rem;
+  margin-bottom: 25px;
+}
+
+.divider {
+  text-align: center;
+  position: relative;
+  margin: 30px 0;
+}
+
+.divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #ddd;
+}
+
+.divider span {
+  position: relative;
+  background: white;
+  padding: 0 20px;
+  color: #999;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
 .file-upload {
   border: 3px dashed #667eea;
   border-radius: 8px;
@@ -185,6 +228,11 @@
 
 .btn-secondary:hover {
   background: #e9ecef;
+}
+
+.btn-large {
+  padding: 18px 50px;
+  font-size: 1.2rem;
 }
 
 .progress-bar {

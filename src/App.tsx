@@ -1,6 +1,19 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import { pdfjs } from 'react-pdf';
 import './App.css';
 import { parseFile } from './utils/fileParser';
+
+// Configure PDF.js worker
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+
+// Demo text for initial screen
+const DEMO_TEXT = `Welcome to TouchType! This is a typing practice application designed to help you improve your typing speed and reading comprehension.
+
+Start typing this text to see how it works. As you type, you'll see green text for correct characters and red for incorrect ones. Your words per minute (WPM) and accuracy will be calculated in real-time.
+
+You can upload your own TXT or PDF files to practice with content you enjoy. Whether you're learning to touch type or just want to improve your speed, TouchType provides immediate feedback to help you track your progress.
+
+Ready to get started? Just click "Try Demo" below to practice with this text, or upload your own file to begin!`;
 
 interface Stats {
   wpm: number;
@@ -22,7 +35,9 @@ function App() {
     charactersTyped: 0,
   });
   const [error, setError] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -42,17 +57,39 @@ function App() {
     if (!file) return;
 
     setError('');
+    setIsLoading(true);
     setFileName(file.name);
 
     try {
       const content = await parseFile(file);
       setText(content);
       resetTyping();
+      setIsLoading(false);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load file');
       setText('');
       setFileName('');
+      setIsLoading(false);
     }
+
+    // Reset file input so the same file can be selected again
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
+  const handleDemoClick = () => {
+    setText(DEMO_TEXT);
+    setFileName('Demo Text');
+    resetTyping();
+    setError('');
+  };
+
+  const handleChangeFile = () => {
+    setText('');
+    setFileName('');
+    resetTyping();
+    setError('');
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -155,28 +192,40 @@ function App() {
       )}
 
       {!text ? (
-        <div className="file-upload">
-          <label htmlFor="file-input" className="file-upload-label">
+        <>
+          <div className="demo-section">
+            <h2>Quick Start</h2>
+            <p>Try the demo or upload your own file to begin practicing</p>
+            <button className="btn btn-primary btn-large" onClick={handleDemoClick}>
+              ✨ Try Demo
+            </button>
+          </div>
+
+          <div className="divider">
+            <span>OR</span>
+          </div>
+
+          <div className="file-upload" onClick={() => fileInputRef.current?.click()}>
             <div className="file-upload-icon">📁</div>
-            <div className="file-upload-text">Click to upload a file</div>
-            <div className="file-upload-hint">Supports TXT, PDF, and EPUB formats</div>
-          </label>
+            <div className="file-upload-text">
+              {isLoading ? 'Loading file...' : 'Click to upload your own file'}
+            </div>
+            <div className="file-upload-hint">Supports TXT and PDF formats</div>
+          </div>
           <input
+            ref={fileInputRef}
             id="file-input"
             type="file"
-            accept=".txt,.pdf,.epub"
+            accept=".txt,.pdf"
             onChange={handleFileUpload}
+            style={{ display: 'none' }}
           />
-        </div>
+        </>
       ) : (
         <>
           <div className="file-info">
             <span className="file-name">📄 {fileName}</span>
-            <button className="btn btn-secondary" onClick={() => {
-              setText('');
-              setFileName('');
-              resetTyping();
-            }}>
+            <button className="btn btn-secondary" onClick={handleChangeFile}>
               Change File
             </button>
           </div>
@@ -235,11 +284,7 @@ function App() {
               Reset
             </button>
             {userInput === text && text && (
-              <button className="btn btn-primary" onClick={() => {
-                setText('');
-                setFileName('');
-                resetTyping();
-              }}>
+              <button className="btn btn-primary" onClick={handleChangeFile}>
                 Practice Again
               </button>
             )}

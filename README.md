@@ -1,21 +1,23 @@
 # TouchType - Typing & Reading Practice Web App
 
-A modern web application designed to help improve touch typing speed and reading comprehension. Import your own text, PDF, or EPUB files and practice typing while tracking your performance in real-time.
+A modern, actively-maintained web application designed to help improve touch typing speed and reading comprehension. Built with the latest 2025 stable frameworks and libraries.
 
 ## Features
 
-- **Multiple File Format Support**: Import files in TXT, PDF, and EPUB formats
-- **Real-Time Typing Feedback**: Character-by-character comparison with color-coded feedback
+- **🎯 Interactive Demo**: Try it immediately with built-in demo text - no file upload needed!
+- **📁 Multiple File Format Support**: Import your own files in TXT and PDF formats
+- **✨ Real-Time Typing Feedback**: Character-by-character comparison with color-coded feedback
   - Green for correct characters
   - Red for incorrect characters
   - Highlighted current position
-- **Performance Metrics**:
+- **📊 Performance Metrics**:
   - Words Per Minute (WPM)
   - Accuracy percentage
   - Time elapsed
   - Progress tracking
-- **Modern UI**: Beautiful gradient design with responsive layout
-- **Progress Tracking**: Visual progress bar showing completion percentage
+- **🎨 Modern UI**: Beautiful gradient design with responsive layout
+- **📈 Progress Tracking**: Visual progress bar showing completion percentage
+- **⚡ Optimized Performance**: Handles large texts (10,000+ characters) smoothly
 
 ## Screenshots
 
@@ -66,10 +68,17 @@ npm run preview
 
 ## Usage
 
-1. **Upload a File**: Click the upload area and select a TXT, PDF, or EPUB file
-2. **Start Typing**: Begin typing in the text area below the displayed text
-3. **Track Progress**: Watch your WPM, accuracy, and progress update in real-time
-4. **Reset or Change**: Use the buttons to reset your progress or load a different file
+### Quick Start (Demo)
+1. Click **"Try Demo"** on the home screen
+2. Start typing immediately to see how the app works
+3. Watch your WPM and accuracy update in real-time
+
+### Upload Your Own File
+1. Click **"Click to upload your own file"** or the upload area
+2. Select a TXT or PDF file from your computer
+3. Start typing the displayed text
+4. Track your progress with real-time statistics
+5. Use **"Reset"** to start over or **"Change File"** to load a different file
 
 ## How It Works
 
@@ -87,17 +96,24 @@ Accuracy = (Correct characters / Total characters typed) × 100
 
 ### File Parsing
 - **TXT files**: Read directly using FileReader API
-- **PDF files**: Parsed using pdf.js library to extract text content
-- **EPUB files**: Parsed using epub.js library to extract text from all sections
+- **PDF files**: Parsed using react-pdf library (v10.2.0) to extract text content from all pages
 
-## Technologies Used
+## Technologies Used (All 2025 Stable & Actively Maintained)
 
-- **React 18.3.1**: Modern UI library with latest stable version
-- **TypeScript 5.7**: Type-safe development with latest features
-- **Vite 6**: Fast build tool and dev server
-- **pdf.js 4.x**: PDF file parsing with updated API
-- **epub.js**: EPUB file parsing (Note: Consider alternatives for production use)
+- **React 18.3.1**: Latest stable version of React (actively maintained)
+- **TypeScript 5.7.2**: Latest stable TypeScript with newest features
+- **Vite 6.0.3**: Latest stable fast build tool and dev server
+- **react-pdf 10.2.0**: Actively maintained PDF viewer/parser for React (last updated: Jan 2025)
 - **CSS3**: Modern styling with gradients and animations
+
+### Why These Libraries?
+
+All dependencies were carefully selected in January 2025 to ensure:
+- ✅ Active maintenance and regular updates
+- ✅ Strong community support
+- ✅ Production-ready stability
+- ✅ Modern React compatibility
+- ✅ TypeScript support
 
 ## Performance Optimizations
 
@@ -130,11 +146,13 @@ TouchType/
 
 ## Important Notes
 
-### EPUB Support Limitation
-The `epubjs` library (v0.3.93) has not been updated since 2020. While it still works for basic EPUB files, for production applications you may want to consider:
-- Using only TXT and PDF formats
-- Implementing a server-side EPUB parser
-- Exploring alternative libraries like Readium.js for more robust EPUB support
+### Supported File Formats
+This application currently supports **TXT** and **PDF** files only. EPUB support was intentionally removed because:
+- The epubjs library (previously used) has not been updated since 2020
+- No actively maintained EPUB libraries exist for browser-based parsing in 2025
+- TXT and PDF formats cover the vast majority of typing practice use cases
+
+If you need to practice with EPUB files, consider converting them to PDF first using free tools like Calibre.
 
 ### Performance
 The app is optimized to handle large texts (10,000+ characters) efficiently through React memoization patterns. However, extremely large files (100,000+ characters) may still cause some performance degradation due to the character-by-character rendering approach.
@@ -154,9 +172,10 @@ Possible future features:
 - Difficulty levels and curated text collections
 - Timed challenges and speed goals
 - Keyboard heat map showing which keys are most problematic
-- Support for more file formats (DOCX, RTF, etc.)
 - Dark mode support
 - Multiplayer typing races
+- More practice modes (e.g., code typing, speed bursts)
+- Mobile app version
 
 ## License
 
