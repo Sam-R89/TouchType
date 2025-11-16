@@ -1,4 +1,4 @@
-import { getDocument } from 'react-pdf';
+import { pdfjs } from 'react-pdf';
 
 export const parseTextFile = async (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -19,7 +19,7 @@ export const parseTextFile = async (file: File): Promise<string> => {
 export const parsePDFFile = async (file: File): Promise<string> => {
   try {
     const arrayBuffer = await file.arrayBuffer();
-    const loadingTask = getDocument({ data: arrayBuffer });
+    const loadingTask = pdfjs.getDocument({ data: arrayBuffer });
     const pdf = await loadingTask.promise;
 
     let fullText = '';

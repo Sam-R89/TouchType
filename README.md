@@ -66,6 +66,32 @@ To preview the production build locally:
 npm run preview
 ```
 
+## 🚀 Deployment
+
+TouchType is **production-ready** and can be deployed to any static hosting platform in minutes!
+
+See **[DEPLOYMENT.md](./DEPLOYMENT.md)** for detailed step-by-step instructions for:
+
+- ⚡ **Vercel** (Recommended - Easiest one-click deploy)
+- 🌐 **Netlify** (Free hosting with great features)
+- 📄 **GitHub Pages** (Deploy directly from your repo)
+- ☁️ **Cloudflare Pages** (Fast global CDN)
+- 🗄️ **AWS S3 + CloudFront** (Professional enterprise hosting)
+- 🌍 **Traditional Web Hosting** (cPanel, shared hosting, FTP)
+
+### ✨ Quick Deploy (One-Click):
+
+The easiest way to deploy is with **Vercel**:
+
+1. Push your code to GitHub
+2. Go to [vercel.com](https://vercel.com)
+3. Click "Import Project" and select your repo
+4. Click "Deploy" - Done! ✅
+
+Your app will be live at `https://your-project.vercel.app` in ~2 minutes.
+
+**No configuration needed** - all deployment files are already included!
+
 ## Usage
 
 ### Quick Start (Demo)
