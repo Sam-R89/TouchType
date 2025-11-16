@@ -146,25 +146,51 @@ function App() {
     });
   }, []);
 
-  // Memoize the rendered text to avoid recreating thousands of elements on every render
+  // Windowed text rendering - only show a portion of text for better performance
   const renderedText = useMemo(() => {
     if (!text) return null;
 
-    return text.split('').map((char, index) => {
-      let className = 'char';
+    const currentPosition = userInput.length;
+    const CONTEXT_BEFORE = 200; // Show 200 chars before current position
+    const CONTEXT_AFTER = 800; // Show 800 chars after current position
 
-      if (index < userInput.length) {
-        className += userInput[index] === char ? ' correct' : ' incorrect';
-      } else if (index === userInput.length) {
-        className += ' current';
-      }
+    // Calculate window boundaries
+    const windowStart = Math.max(0, currentPosition - CONTEXT_BEFORE);
+    const windowEnd = Math.min(text.length, currentPosition + CONTEXT_AFTER);
 
-      return (
-        <span key={index} className={className}>
-          {char}
-        </span>
-      );
-    });
+    // Extract the visible window of text
+    const visibleText = text.substring(windowStart, windowEnd);
+
+    return (
+      <>
+        {windowStart > 0 && (
+          <span className="char context-indicator">
+            ... (typed {windowStart} characters)
+          </span>
+        )}
+        {visibleText.split('').map((char, relativeIndex) => {
+          const absoluteIndex = windowStart + relativeIndex;
+          let className = 'char';
+
+          if (absoluteIndex < userInput.length) {
+            className += userInput[absoluteIndex] === char ? ' correct' : ' incorrect';
+          } else if (absoluteIndex === userInput.length) {
+            className += ' current';
+          }
+
+          return (
+            <span key={absoluteIndex} className={className}>
+              {char}
+            </span>
+          );
+        })}
+        {windowEnd < text.length && (
+          <span className="char context-indicator">
+            ... ({text.length - windowEnd} more characters)
+          </span>
+        )}
+      </>
+    );
   }, [text, userInput]);
 
   const formatTime = (seconds: number) => {

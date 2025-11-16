@@ -145,6 +145,18 @@
   25%, 75% { opacity: 0.5; }
 }
 
+.context-indicator {
+  color: #999;
+  font-style: italic;
+  font-size: 0.9rem;
+  display: block;
+  margin: 10px 0;
+  padding: 8px 12px;
+  background: #f0f0f0;
+  border-radius: 4px;
+  border-left: 3px solid #667eea;
+}
+
 .input-area {
   width: 100%;
   padding: 15px;
