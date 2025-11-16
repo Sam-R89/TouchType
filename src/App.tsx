@@ -3,8 +3,8 @@ import { pdfjs } from 'react-pdf';
 import './App.css';
 import { parseFile } from './utils/fileParser';
 
-// Configure PDF.js worker
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+// Configure PDF.js worker - using jsDelivr CDN with HTTPS
+pdfjs.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
 // Demo text for initial screen
 const DEMO_TEXT = `Welcome to TouchType! This is a typing practice application designed to help you improve your typing speed and reading comprehension.
